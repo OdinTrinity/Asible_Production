@@ -1,0 +1,20 @@
+---
+- name: Create VLANs 1–40 on MikroTik ether1
+  hosts: mikrotik
+  gather_facts: no
+  vars:
+    parent_interface: ether1
+    vlan_start: 1
+    vlan_end: 40
+
+  tasks:
+    - name: Add VLAN interfaces on ether1
+      ansible.builtin.command: >
+        /interface/vlan/add name=vlan{{ item }} vlan-id={{ item }} interface={{ parent_interface }}
+      with_sequence: start={{ vlan_start }} end={{ vlan_end }}
+      register: vlan_add_result
+      ignore_errors: yes  # optional: continue if some VLANs already exist
+
+    - name: Show VLAN creation output
+      ansible.builtin.debug:
+        var: vlan_add_result.results
