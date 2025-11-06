@@ -1,3 +1,6 @@
 srvtwo@12.1.0.61
 srvthree@12.1.0.50
 srvone@12.1.0.59
+
+[mikrotik]
+admin@172.0.0.1
