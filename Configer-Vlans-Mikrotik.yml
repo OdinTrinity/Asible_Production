@@ -1,0 +1,45 @@
+---
+- name: Configure VLANs 1-10 on ether2
+  hosts: routers
+  gather_facts: no
+
+  tasks:
+    - name: Create VLANs 1-10 on ether2
+      community.routeros.command:
+        commands: "{{ item }}"
+      loop:
+        - /interface vlan add name=vlan1 vlan-id=1 interface=ether2
+        - /interface vlan add name=vlan2 vlan-id=2 interface=ether2
+        - /interface vlan add name=vlan3 vlan-id=3 interface=ether2
+        - /interface vlan add name=vlan4 vlan-id=4 interface=ether2
+        - /interface vlan add name=vlan5 vlan-id=5 interface=ether2
+        - /interface vlan add name=vlan6 vlan-id=6 interface=ether2
+        - /interface vlan add name=vlan7 vlan-id=7 interface=ether2
+        - /interface vlan add name=vlan8 vlan-id=8 interface=ether2
+        - /interface vlan add name=vlan9 vlan-id=9 interface=ether2
+        - /interface vlan add name=vlan10 vlan-id=10 interface=ether2
+      register: vlan_creation_result
+
+    - name: Set IP address on VLANs 1-10
+      community.routeros.command:
+        commands: "{{ item }}"
+      loop:
+        - /ip address add address=102.0.0.1/24 interface=vlan1
+        - /ip address add address=102.0.0.2/24 interface=vlan2
+        - /ip address add address=102.0.0.3/24 interface=vlan3
+        - /ip address add address=102.0.0.4/24 interface=vlan4
+        - /ip address add address=102.0.0.5/24 interface=vlan5
+        - /ip address add address=102.0.0.6/24 interface=vlan6
+        - /ip address add address=102.0.0.7/24 interface=vlan7
+        - /ip address add address=102.0.0.8/24 interface=vlan8
+        - /ip address add address=102.0.0.9/24 interface=vlan9
+        - /ip address add address=102.0.0.10/24 interface=vlan10
+      register: ip_address_result
+
+    - name: Show VLAN creation results
+      debug:
+        var: vlan_creation_result
+
+    - name: Show IP address assignment results
+      debug:
+        var: ip_address_result

@@ -1,0 +1,23 @@
+---
+- name: Export MikroTik configuration using SSH keys
+  hosts: mikrotik
+  gather_facts: no
+  tasks:
+    - name: Export configuration from MikroTik
+      mikrotik.routeros.routeros_command:
+        host: "{{ inventory_hostname }}"
+        username: "{{ ansible_ssh_user }}"
+        keyfile: "{{ ansible_ssh_private_key_file }}"
+        commands:
+          - "/export file=config_export"
+      register: output
+
+    - name: Fetch exported file
+      ansible.builtin.fetch:
+        src: "/file-store/config_export.rsc"
+        dest: "./config_exports/"
+        flat: yes
+
+    - name: Show the output of the export
+      debug:
+        msg: "{{ output }}"
