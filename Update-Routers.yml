@@ -1,0 +1,35 @@
+---
+- name: Rename MikroTik interface
+  hosts: routers
+  gather_facts: no
+  connection: network_cli
+  vars:
+    ansible_network_os: community.routeros.routeros
+
+    # Define interface name and new name
+    old_name: "ether2"
+    new_name: "ether2-WAN2"
+
+  tasks:
+    - name: Show current interfaces (for reference)
+      community.routeros.command:
+        commands: /interface print
+      register: interface_list
+
+    - name: Display current interface names
+      debug:
+        var: interface_list.stdout_lines
+
+    - name: Rename the interface
+      community.routeros.command:
+        commands:
+          - /interface set [find name="{{ old_name }}"] name="{{ new_name }}"
+
+    - name: Verify interface was renamed
+      community.routeros.command:
+        commands: /interface print where name="{{ new_name }}"
+      register: rename_check
+
+    - name: Show result
+      debug:
+        var: rename_check.stdout_lines
