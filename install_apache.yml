@@ -1,7 +1,10 @@
 ---
-- hosts: servers
+- name: Start Zabbix Agent on managed servers
+  hosts: all
   become: yes
   tasks:
-    - name: update apt cache
-      apt:
-        update_cache: yes
+    - name: Ensure Zabbix Agent is started and enabled
+      ansible.builtin.service:
+        name: zabbix-agent
+        state: started
+        enabled: yes

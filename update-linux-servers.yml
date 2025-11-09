@@ -1,0 +1,24 @@
+---
+- name: Update and upgrade the server
+  hosts: all  # You can specify your host or group here (e.g., `web_servers`)
+  become: true  # This ensures you run the tasks as sudo (root)
+  tasks:
+
+    - name: Update the apt package list
+      apt:
+        update_cache: yes
+
+    - name: Upgrade all packages
+      apt:
+        upgrade: dist  # 'dist' upgrades packages and performs a distribution upgrade
+
+    - name: Perform a distribution upgrade
+      apt:
+        upgrade: dist
+        autoclean: yes
+        autoremove: yes
+
+    - name: Remove unused packages
+      apt:
+        autoremove: yes
+        purge: yes  # Purges any obsolete or unused packages
