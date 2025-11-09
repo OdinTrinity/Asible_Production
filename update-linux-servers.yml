@@ -1,6 +1,6 @@
 ---
 - name: Update and upgrade the server
-  hosts: all  # You can specify your host or group here (e.g., `web_servers`)
+  hosts: servers  # You can specify your host or group here (e.g., `web_servers`)
   become: true  # This ensures you run the tasks as sudo (root)
   tasks:
 
