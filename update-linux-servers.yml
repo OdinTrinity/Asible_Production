@@ -22,3 +22,4 @@
       apt:
         autoremove: yes
         purge: yes  # Purges any obsolete or unused packages
+    - name: Reboot the server if needed

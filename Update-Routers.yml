@@ -8,7 +8,7 @@
 
     # Define interface name and new name
     old_name: "ether2"
-    new_name: "ether2-WAN2"
+    new_name: "ether2-WAN2 main connection"
 
   tasks:
     - name: Show current interfaces (for reference)
