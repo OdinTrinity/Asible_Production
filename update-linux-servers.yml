@@ -21,4 +21,4 @@
     - name: Remove unused packages
       apt:
         autoremove: yes
-        purge: yes  # Purges any obsolete or unused packages
+        purge: yes  # Purges any obsolete or unused packages am loving this
