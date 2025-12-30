@@ -1,15 +1,15 @@
 ---
-- name: Ping MikroTik Routers
+- name: Show MikroTik interfaces
   hosts: routers
   gather_facts: no
 
   tasks:
-    - name: Show interface list
+    - name: List interfaces
       community.routeros.command:
         commands:
           - /interface print
-      register: interface_output
+      register: interfaces
 
     - name: Display interfaces
       debug:
-        var: interface_output.stdout_lines
+        var: interfaces.stdout_lines
