@@ -1,15 +1,15 @@
 ---
-- name: Show MikroTik interfaces
+- name: Test MikroTik connectivity
   hosts: routers
   gather_facts: no
 
   tasks:
-    - name: List interfaces
+    - name: Show router identity
       community.routeros.command:
         commands:
-          - /interface print
-      register: interfaces
+          - /system identity print
+      register: identity
 
-    - name: Display interfaces
+    - name: Display output
       debug:
-        var: interfaces.stdout_lines
+        var: identity.stdout_lines
