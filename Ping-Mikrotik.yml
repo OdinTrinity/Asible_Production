@@ -2,6 +2,14 @@
 - name: Ping MikroTik Routers
   hosts: routers
   gather_facts: no
+
   tasks:
-    - name: Ping MikroTik router
-      ansible.builtin.ping:
+    - name: Show interface list
+      community.routeros.command:
+        commands:
+          - /interface print
+      register: interface_output
+
+    - name: Display interfaces
+      debug:
+        var: interface_output.stdout_lines
